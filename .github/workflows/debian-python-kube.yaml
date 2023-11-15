@@ -51,7 +51,7 @@ jobs:
         run: |
           versions=()
           for line in $(docker run continuumio/anaconda3 conda search python | grep -v Name | grep -v '^$' | grep -v 'channels:' | awk '{print $2}' | sort -V | uniq); do
-            if [[ $line == 3* ]]; then
+            if [[ $(echo "$line 3.9" | awk '{print ($1 > $2)}') -eq 1 ]]; then
               versions+=($line)
             fi
           done
@@ -138,7 +138,7 @@ jobs:
     permissions:
       packages: write
     strategy:
-      max-parallel: 10
+      max-parallel: 3
       matrix:
         python-version: ${{ fromJson(needs.gather.outputs.python-versions) }}
     steps:
