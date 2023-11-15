@@ -76,7 +76,7 @@ jobs:
           }
           versions=()
           for line in $(docker run continuumio/anaconda3 conda search python | grep -v Name | grep -v '^$' | grep -v 'channels:' | awk '{print $2}' | sort -V | uniq); do
-            if testvercomp $line 3.9 '<'; then
+            if testvercomp $line 3.9 '>'; then
               versions+=($line)
             fi
           done
