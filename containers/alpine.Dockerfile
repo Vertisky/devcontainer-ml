@@ -1,7 +1,7 @@
 ARG BASE_VERSION=v1.2.1
 ARG PYTHON_VERSION=3.9
 
-FROM etma/devcontainer-base:alpine-${BASE_VERSION}
+FROM etma/devcontainer-base:${PYTHON_VERSION}-alpine
 ARG VERSION
 ARG COMMIT
 ARG BUILD_DATE
@@ -20,16 +20,6 @@ LABEL \
     org.opencontainers.image.version=$VERSION \
     org.opencontainers.image.revision=$COMMIT \
     org.opencontainers.image.created=$BUILD_DATE
-
-RUN apk add --no-cache \
-        python${PYTHON_VERSION} python${PYTHON_VERSION}-dev \
-        python3-pip python3-venv \
-        build-base ca-certificates curl \
-        git jq libffi-dev openssl-dev \
-        openssh-client tzdata zlib-dev \
-    && pip3 install --upgrade pip \
-    && rm -rf /var/cache/apk/*
-
 
 # Install Python packages
 

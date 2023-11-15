@@ -1,6 +1,6 @@
-ARG PYTHON_VERSION=3.9
+ARG PYTHON_VERSION=3.9.1
 
-FROM etma/devcontainer-python:ubuntu-base
+FROM etma/devcontainer-python:${PYTHON_VERSION}-ubuntu
 ARG VERSION
 ARG COMMIT
 ARG BUILD_DATE
@@ -18,21 +18,6 @@ LABEL \
     org.opencontainers.image.version=$VERSION \
     org.opencontainers.image.revision=$COMMIT \
     org.opencontainers.image.created=$BUILD_DATE
-
-# Needs to be rewritten later to use the real python image instead of the base image
-
-ENV PATH /opt/conda/bin:/opt/conda/envs/py${PYTHON_VERSION}/bin:$PATH
-
-RUN conda config --add channels conda-forge \
-    && conda update --all --yes \
-    && conda clean --all --yes
-
-RUN conda create -n py${PYTHON_VERSION} python=${PYTHON_VERSION} \
-    && conda clean --all --yes \
-    && echo "conda activate py${PYTHON_VERSION}" >> ~/.profile
-
-ENV PATH /opt/conda/envs/py${PYTHON_VERSION}/bin:$PATH
-
 
 # Install Python packages
 

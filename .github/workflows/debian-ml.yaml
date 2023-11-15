@@ -204,6 +204,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: ['gather']
     if: github.event_name == 'push'
+    fail-fast: false
     permissions:
       packages: write
     strategy:
